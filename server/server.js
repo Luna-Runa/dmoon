@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import express from "express";
 import path from 'path';
 import ejs from "ejs";
-import router from "./routes/main.js";
-//import userRouter from "./routes/userRouter.js";
+import router from "./routes/mainRouter.js";
+import cors from "cors";
 //import main from "./routes/main.js";
 dotenv.config();
 
@@ -21,7 +21,8 @@ server.use('/', router);
 server.set('views', __dirname + '/views');
 server.set('view engine', 'ejs');
 server.engine('html', ejs.renderFile);
-//server.use("/api/user", userRoutes);
+
+server.use(cors());
 //server.use(express.static(path.join(__dirname, 'react-build')))
 
 mongoose.connect(
