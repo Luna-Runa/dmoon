@@ -13,6 +13,10 @@ const diarySchema = new mongoose.Schema({
     todoText: {
         type: String
     },
+
+    date: {
+        type: String
+    }
 },
     { versionKey: false });
 

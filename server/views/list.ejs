@@ -2,88 +2,55 @@
 <html lang="kr">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-  <title>DMoon</title>
+  <%- include('header.ejs') %>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">DMoon</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <%- include('diaryNavbar.html')%>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
+    <div class="container mt-4">
+      <h4 class="ml-2 my-3">일기장 내역</h4>
+      <% for (let i=0; i < posts.length; i++) { %>
+        <ul class="list-group"></ul>
+        <li class="list-group-item mb-3">
+          <h4 class="text-justify">기분 : <%= posts[i].mood %>
+          </h4>
+          <h6 class="card-subtitle mb-2 text-muted">
+            <%= posts[i].date%>
+          </h6>
+          <p class="text-justify">한 일 : <%= posts[i].todoBool? "성공 " + posts[i].todoText : "실패 " + posts[i].todoText; %>
+          </p>
+          <button type="button" class="btn btn-primary"
+            onclick="location.href='/edit/<%= posts[i]._id %>'">수정</button>
+          <button type="button" class="btn btn-danger" data-id="<%= posts[i]._id %>">삭제</button>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">일기장</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">친구</a>
-        </li>
-      </ul>
+        </ul>
+        <% } %>
+          </ul>
     </div>
-  </nav>
+
+    <!-- jquery 불러오기 -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 
 
-  <h4 class="ml-2 my-3">일기장 내역</h4>
+    <script>
+      $('.btn-danger').click(function (e) {
+        let id = e.target.dataset.id; //data-id인거
 
-  <% for (let i=0; i < posts.length; i++) { %>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <h4 class="text-justify">기분 : <%= posts[i].mood %>
-        </h4>
-        <p class="text-justify">한 일 : <%= posts[i].todoBool? "성공 " + posts[i].todoText : "실패 " + posts[i].todoText; %>
-        </p>
-        <button type="button" class="btn btn-secondary" data-id="<%= posts[i]._id %>">삭제</button>
-      </li>
-    </ul>
-    <% } %>
+        //db에서 삭제
+        $.ajax({
+          method: 'DELETE',
+          url: '/delete',
+          data: { _id: id }
+        }).done((res) => {  //성공했을 때
+          $(this).parents('li').fadeOut();
 
-      <!-- jquery 불러오기 -->
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        }).fail((xhr, textStatus, errorThrown) => {
+          console.log(xhr, textStatus, errorThrown);
+        });
+      })
 
-      <script>
-
-        $('.btn').click(function(e) {
-          let id = e.target.dataset.id; //data-id인거
-
-          //db에서 삭제
-          $.ajax({
-            method: 'DELETE',
-            url: '/delete',
-            data: { _id: id }
-          }).done((res) => {  //성공했을 때
-            $(this).parents('li').fadeOut();
-
-          }).fail((xhr, textStatus, errorThrown) => {
-            console.log(xhr, textStatus, errorThrown);
-          });
-        })
-
-      </script>
-
-
-
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    </script>
 </body>
 
 </html>

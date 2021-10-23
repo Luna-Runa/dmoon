@@ -5,6 +5,7 @@ import path from 'path';
 import ejs from "ejs";
 import router from "./routes/mainRouter.js";
 import cors from "cors";
+import methodOverride from "method-override";
 //import main from "./routes/main.js";
 dotenv.config();
 
@@ -23,7 +24,11 @@ server.set('view engine', 'ejs');
 server.engine('html', ejs.renderFile);
 
 server.use(cors());
+//static 파일 보관을 위해 해당 폴더 사용 선언
 //server.use(express.static(path.join(__dirname, 'react-build')))
+server.use('/public', express.static('public'));
+
+server.use(methodOverride('_method'));
 
 mongoose.connect(
     process.env.MONGODB_URL,
