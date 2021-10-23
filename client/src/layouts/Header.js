@@ -23,6 +23,11 @@ const Header = () => {
                         <Navbar.Brand>DMoon</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="me-auto">
+                                <Nav.Link href="/">홈</Nav.Link>
+                                <Nav.Link href="/diary">일기장</Nav.Link>
+                                <Nav.Link href="/friends">친구</Nav.Link>
+                            </Nav>
                             <Nav className="ms-auto">
                                 <Nav.Link>
                                     <Button variant="primary" onClick={() => setLogInModalOn(true)}>로그인</Button>

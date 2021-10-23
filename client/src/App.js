@@ -5,7 +5,7 @@ import axios from "axios";
 
 function App() {
   const callApi = async () => {
-    axios.get("/users").then((res) => console.log(res.data.test));
+    axios.get("/test").then((res) => console.log(res.data.test));
   };
   
   React.useEffect(() => {
@@ -13,30 +13,12 @@ function App() {
     }, []);
   
 
-  const [count, setCount] = useState(0);  //state 선언
-
-  const showLog = () => {
-    console.log(count);
-  };
-
-  const handleLogButton = () => {
-    setTimeout(showLog, 2000);
-  };
-
-  const handlePlusButton = () => {
-    setCount(prev => prev + 1);
-  };
+  let [count, setCount] = useState(0);  //state 선언
 
   return (
     <Layout>
       <Container style={{ minHeight: "75vh" }}>
-        apaap
-        <div style={{ border: '1px solid black', margin: 12 }}>
-          <h1>This is Function Component</h1>
-          <div>{count}</div>
-          <button onClick={handlePlusButton}>+</button>
-          <button onClick={handleLogButton}>alert</button>
-        </div>
+        <h3> apaap <span onClick={ () => { setCount(count + 1) } }>💕</span> {count} </h3>
       </Container>
     </Layout>
   );

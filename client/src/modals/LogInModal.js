@@ -27,9 +27,12 @@ const SignInModal = ({ show, onHide }) => {
                 <Form.Label>비밀번호</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
+
+              <Login />
+              
             </Form>
 
-            <Login />
+            
 
           </Modal.Body>
         </Modal>

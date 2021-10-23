@@ -37,6 +37,6 @@ mongoose.connect(
         if (err) return console.log("ERR", err);
 
         console.log("DB Connection Successful");
-        server.listen(4000, () => console.log("server start http://127.0.0.1:4000/"));
+        server.listen(process.env.PORT, () => console.log("server start http://127.0.0.1:4000/"));
     }
 );
