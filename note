@@ -1,0 +1,17 @@
+front
+let a = [2, 3, 4]
+
+let fixA = a.map( (a) => {
+  return a * 2 // ( <div></div> available )
+});
+
+= fixA [4, 6, 8]
+
+
+
+back
+
+ejs
+include = <%- %>
+var = <%= %>
+grammar(for, if) = <% %>
