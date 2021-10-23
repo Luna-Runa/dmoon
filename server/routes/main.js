@@ -24,7 +24,7 @@ const router = express.Router();
     });
 
     router.get('/test', (req, res) => {
-        res.render('index.ejs');
+        res.sendFile(__dirname + '/test.html');
     });
 }
 
