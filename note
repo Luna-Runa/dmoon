@@ -17,6 +17,8 @@ function createList() {
   return arr;
 }
 
+const db = 'http://' + host + ':' + port + '/' + database;
+-> const db = `http://${host}:${port}/${database}`;
 --------------------
 props (state)
 부모 -> 자식 (상속? 인수? 같은개념?)
