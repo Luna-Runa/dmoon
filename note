@@ -17,6 +17,8 @@ function createList() {
   return arr;
 }
 
+const db = 'http://' + host + ':' + port + '/' + database;
+-> const db = `http://${host}:${port}/${database}`;
 --------------------
 props (state)
 부모 -> 자식 (상속? 인수? 같은개념?)
@@ -33,6 +35,23 @@ function Modal(props) {
 ----------------------
 
 사진넣기 : className="mainimage" 태그넣고 css에서 .mainimage{ background-image: url() 등 이런식으로 css로 통합
+
+-----------------------
+
+import { useParams } from 'react-router-dom';
+
+let { id } = useParams();
+
+/:id 해놓은 곳에 :id 받아오기
+
+------------------------
+
+
+useEffect(()=> {
+  //반복마다 재생
+  let timer = setTimeout(()=>{ 기능 }, 2000);
+  return ()=> { clearTimeout(timer) } //사라질때 재생
+ }, [state(변경시)]);  //반복 조건 []로 할 시 단 한번
 
 
 
