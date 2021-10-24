@@ -37,6 +37,15 @@ function Modal(props) {
 사진넣기 : className="mainimage" 태그넣고 css에서 .mainimage{ background-image: url() 등 이런식으로 css로 통합
 
 
+-----------------------
+
+import { useParams } from 'react-router-dom';
+
+let { id } = useParams();
+
+/:id 해놓은 곳에 :id 받아오기
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 
