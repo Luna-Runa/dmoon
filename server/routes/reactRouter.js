@@ -94,4 +94,8 @@ reactRouter.put('/edit', (req, res) => {
 
 });
 
+reactRouter.get('*', (req, res) => {
+    res.sendFile(index);
+});
+
 export default reactRouter;

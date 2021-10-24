@@ -6,9 +6,9 @@ const DiaryList = props => {
     return (
         <>
             {
-                props.diary.map(function (data) {
+                props.diary.map((data) => {
                     return (
-                        <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
+                        <Card key={data._id} style={{ width: '18rem', marginBottom: '0.5rem' }}>
                             <Card.Body>
                                 <Card.Title>{data.mood}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">{data.date}</Card.Subtitle>
