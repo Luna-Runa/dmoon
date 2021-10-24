@@ -17,7 +17,7 @@ const Header = () => {
                 show={LogInModalOn}
                 onHide={() => setLogInModalOn(false)}
             />
-            <header>
+            <header style={{marginBottom : '1rem' }}>
                 <Navbar bg="light" expand="lg">
                     <Container>
                         <Navbar.Brand>DMoon</Navbar.Brand>

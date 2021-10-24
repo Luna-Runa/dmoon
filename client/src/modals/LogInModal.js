@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
 import Login from '../components/Login'
 
-const SignInModal = ({ show, onHide }) => {
+const LogInModal = ({ show, onHide }) => {
     return (
         <Modal
           show={show}
@@ -29,7 +29,7 @@ const SignInModal = ({ show, onHide }) => {
               </Form.Group>
 
               <Login />
-              
+
             </Form>
 
             
@@ -39,4 +39,4 @@ const SignInModal = ({ show, onHide }) => {
       )
     }
 
-export default SignInModal;
+export default LogInModal;

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
-import { GoogleLogin } from 'react-google-login'
-import HorizontalLine from '../components/HorizonLine'
+import { Modal, Form } from 'react-bootstrap'
+import Register from '../components/Register'
 
-const SignUpModal = ({ show, onHide }) => {
+const RegisterModal = ({ show, onHide }) => {
   return (
     <Modal
       show={show}
@@ -39,32 +38,12 @@ const SignUpModal = ({ show, onHide }) => {
             <Form.Control type="password" placeholder="Confirm password" />
           </Form.Group>
 
-          <div className="d-grid gap-2 my-3">
-            <Button variant="info" type="button">
-              회원가입
-            </Button>
-            <HorizontalLine text={"OR"} />
-            <GoogleLogin
-              render={(renderProps) => {
-                return (
-                  <Button
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    style={{
-                      backgroundColor: "#176BEF",
-                      borderColor: "#176BEF",
-                    }}
-                  >
-                    <i className="fab fa-google">&nbsp;</i>Register With Google
-                  </Button>
-                );
-              }}
-            />
-          </div>
+          <Register />
+
         </Form>
       </Modal.Body>
     </Modal>
   )
 }
 
-export default SignUpModal;
+export default RegisterModal;

@@ -4,9 +4,9 @@ import express from "express";
 import path from 'path';
 import ejs from "ejs";
 import router from "./routes/mainRouter.js";
+import reactRouter from "./routes/reactRouter.js";
 import cors from "cors";
 import methodOverride from "method-override";
-//import main from "./routes/main.js";
 dotenv.config();
 
 const __dirname = path.resolve();
@@ -17,6 +17,7 @@ server.use(express.urlencoded({ extended: true }))
 server.use(express.json())
 
 server.use('/', router);
+server.use('/react', reactRouter);
 
 //views 폴더 인식과 ejs 사용 처리
 server.set('views', __dirname + '/views');
