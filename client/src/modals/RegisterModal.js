@@ -1,6 +1,6 @@
-import React from 'react'
-import { Modal, Form } from 'react-bootstrap'
-import Register from '../components/Register'
+import React from 'react';
+import { Modal, Form } from 'react-bootstrap';
+import Register from '../components/Register';
 
 const RegisterModal = ({ show, onHide }) => {
   return (
@@ -12,9 +12,7 @@ const RegisterModal = ({ show, onHide }) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          회원가입
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">회원가입</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -39,11 +37,10 @@ const RegisterModal = ({ show, onHide }) => {
           </Form.Group>
 
           <Register />
-
         </Form>
       </Modal.Body>
     </Modal>
-  )
-}
+  );
+};
 
 export default RegisterModal;
