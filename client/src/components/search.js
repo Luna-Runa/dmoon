@@ -1,7 +1,7 @@
 import React from 'react'
 import { InputGroup, Button, FormControl, Card } from 'react-bootstrap'
 
-const search = () => {
+const Search = () => {
   return (
     <div>
       <InputGroup className="mb-3">
@@ -33,4 +33,4 @@ const search = () => {
   )
 }
 
-export default search
+export default Search
