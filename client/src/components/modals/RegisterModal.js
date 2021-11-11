@@ -1,16 +1,11 @@
-import React from 'react';
-import { Modal, Form } from 'react-bootstrap';
-import Register from '../components/Register';
+import React from 'react'
+import { Modal, Form, Button } from 'react-bootstrap'
+import HorizonLine from '../HorizonLine'
+import GoogleLogin from 'react-google-login'
 
 const RegisterModal = ({ show, onHide }) => {
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+    <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">회원가입</Modal.Title>
       </Modal.Header>
@@ -36,11 +31,32 @@ const RegisterModal = ({ show, onHide }) => {
             <Form.Control type="password" placeholder="Confirm password" />
           </Form.Group>
 
-          <Register />
+          <div className="d-grid gap-2 my-3">
+            <Button variant="info" type="button">
+              회원가입
+            </Button>
+            <HorizonLine text={'OR'} />
+            <GoogleLogin
+              render={renderProps => {
+                return (
+                  <Button
+                    onClick={renderProps.onClick()}
+                    disabled={renderProps.disabled}
+                    style={{
+                      backgroundColor: '#176BEF',
+                      borderColor: '#176BEF',
+                    }}
+                  >
+                    <i className="fab fa-google">&nbsp;</i>Register With Google
+                  </Button>
+                )
+              }}
+            />
+          </div>
         </Form>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default RegisterModal;
+export default RegisterModal

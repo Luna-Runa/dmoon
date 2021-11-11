@@ -1,24 +1,30 @@
 import mongoose from "mongoose";
 
-const diarySchema = new mongoose.Schema({
+const diarySchema = new mongoose.Schema(
+  {
     mood: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
 
     todoBool: {
-        type: Boolean
+      type: Boolean,
     },
 
     todoText: {
-        type: String
+      type: String,
     },
 
     date: {
-        type: String
-    }
-},
-    { versionKey: false });
+      type: String,
+    },
+
+    likes: {
+      type: Number,
+    },
+  },
+  { versionKey: false }
+);
 
 const Diary = mongoose.model("diary", diarySchema);
 

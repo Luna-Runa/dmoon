@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import Diary from './Diary/Diary'
-import Search from './search'
+import Search from './Search'
 
 const Routes = () => {
   return (
