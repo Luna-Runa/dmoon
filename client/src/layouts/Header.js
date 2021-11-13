@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Navbar, Nav, Button, Container } from 'react-bootstrap'
 import RegisterModal from '../components/modals/RegisterModal'
 import LogInModal from '../components/modals/LogInModal'
@@ -18,9 +19,15 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/">홈</Nav.Link>
-                <Nav.Link href="/diary">일기장</Nav.Link>
-                <Nav.Link href="/friends">친구</Nav.Link>
+                <Nav.Link as={Link} to="/">
+                  홈
+                </Nav.Link>
+                <Nav.Link as={Link} to="/diary">
+                  일기장
+                </Nav.Link>
+                <Nav.Link as={Link} to="/friends">
+                  친구
+                </Nav.Link>
               </Nav>
               <Nav className="ms-auto">
                 <Nav.Link>

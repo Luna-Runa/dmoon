@@ -1,18 +1,20 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import Diary from './Diary/Diary'
-import Search from './Search'
+import DiaryList from './Diary/DiaryList'
+import DiaryEdit from './Diary/DiaryEdit'
+import Friends from './Friends'
 
 const Routes = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/diary" component={Diary} />
-        <Route path="/friends" component={Search} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/diary" component={Diary} />
+      <Route path="/diary/list" component={DiaryList} />
+      <Route path="/diary/:id" component={DiaryEdit} />
+      <Route path="/friends" component={Friends} />
+    </Switch>
   )
 }
 

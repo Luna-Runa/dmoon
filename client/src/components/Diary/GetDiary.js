@@ -6,7 +6,7 @@ const GetDiary = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get('/react/list').then(({ data }) => dispatch({ type: 'set', payload: data }))
+    axios.get('/diary/list').then(({ data }) => dispatch({ type: 'set', payload: data }))
   }, [])
 
   return <></>

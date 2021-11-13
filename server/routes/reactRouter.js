@@ -11,19 +11,13 @@ const __dirname = path.resolve();
 
 const reactRouter = express.Router();
 
-reactRouter.get("/list", (req, res) => {
+const index = path.resolve(__dirname, "../../client/public/index.html");
+
+reactRouter.get("/diary/list", (req, res) => {
   Diary.find((err, diaries) => {
     if (err) return res.status(500).send({ error: "database failure" });
 
     res.send(diaries);
-  });
-});
-
-reactRouter.get("/edit/:id", (req, res) => {
-  Diary.findOne({ _id: req.params.id }, (err, res2) => {
-    if (err) return res.status(500).send({ error: "database failure" });
-
-    res.render("edit.ejs", { data: res2 });
   });
 });
 
@@ -38,13 +32,15 @@ reactRouter.get("/users", (req, res) => {
 reactRouter.post("/register", userRegisterController);
 reactRouter.post("/login", userLogInController);
 
-reactRouter.post("/add", (req, res) => {
+reactRouter.post("/diary/add", (req, res) => {
+  const moods = ["행복함", "즐거움", "보통", "그저그럼", "기분나쁨"];
+  console.log(req.body);
   let { mood, todoBool, todoText } = req.body;
-  if (todoBool === "on") todoBool = true;
-  else todoBool = false;
 
   let time = new Date();
   time = time.toLocaleDateString();
+
+  mood = moods[req.body.mood - 1];
 
   let diary = new Diary({
     mood,
@@ -56,7 +52,6 @@ reactRouter.post("/add", (req, res) => {
   console.log(diary);
   //diary에 push
   diary.save();
-  res.send("성공!");
 });
 
 reactRouter.delete("/delete", (req, res) => {

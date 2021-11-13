@@ -10,25 +10,6 @@ const Search = () => {
           검색
         </Button>
       </InputGroup>
-
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>테스트 계정</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@Test_account2</Card.Subtitle>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>테스트 계정</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@Test_account2</Card.Subtitle>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>Test for account</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@temp_111</Card.Subtitle>
-        </Card.Body>
-      </Card>
     </div>
   )
 }

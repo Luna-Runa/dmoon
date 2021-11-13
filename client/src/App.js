@@ -3,7 +3,6 @@ import Layout from './layouts/Layout'
 import React from 'react'
 import Router from './components/Routes'
 import { withRouter } from 'react-router-dom'
-//import styled from "styled-components";
 
 function App() {
   return (

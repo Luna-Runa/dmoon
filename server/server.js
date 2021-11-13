@@ -19,8 +19,8 @@ const server = express();
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
-server.use("/", router);
-server.use("/react", reactRouter);
+/* server.use("/", router); */
+server.use(reactRouter);
 
 //views 폴더 인식과 ejs 사용 처리
 server.set("views", __dirname + "/views");
@@ -34,11 +34,15 @@ server.use("/public", express.static("public"));
 
 server.use(methodOverride("_method"));
 
-server.use(
-  session({ secret: "secretCode", resave: true, saveUninitialized: false })
+/* server.use(
+  expressSession({
+    secret: "secretCode",
+    resave: true,
+    saveUninitialized: false,
+  })
 );
 server.use(passport.saveUninitialized());
-server.use(passport.session());
+server.use(passport.session()); */
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
   if (err) return console.log("ERR", err);
