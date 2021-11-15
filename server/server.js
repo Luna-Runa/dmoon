@@ -3,13 +3,16 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import ejs from "ejs";
-import router from "./routes/mainRouter.js";
+/* import router from "./routes/mainRouter.js"; */
 import reactRouter from "./routes/reactRouter.js";
 import cors from "cors";
 import methodOverride from "method-override";
+
 import passport from "passport";
 import passportLocal from "passport-local";
 import expressSession from "express-session";
+import User from "./models/userModel.js";
+
 dotenv.config();
 
 const __dirname = path.resolve();
@@ -18,6 +21,18 @@ const server = express();
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
+
+const LocalStrategy = passportLocal.Strategy;
+
+server.use(
+  expressSession({
+    secret: "secretCode",
+    resave: true,
+    saveUninitialized: false,
+  })
+);
+server.use(passport.initialize());
+server.use(passport.session());
 
 /* server.use("/", router); */
 server.use(reactRouter);
@@ -33,16 +48,6 @@ server.use(cors());
 server.use("/public", express.static("public"));
 
 server.use(methodOverride("_method"));
-
-/* server.use(
-  expressSession({
-    secret: "secretCode",
-    resave: true,
-    saveUninitialized: false,
-  })
-);
-server.use(passport.saveUninitialized());
-server.use(passport.session()); */
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
   if (err) return console.log("ERR", err);
