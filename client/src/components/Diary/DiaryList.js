@@ -1,12 +1,21 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Card, Button, Stack, Form } from 'react-bootstrap'
-import GetDiary from './GetDiary'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 
 const DiaryList = () => {
-  const diary = useSelector(state => state)
+  const reducer = useSelector(state => state)
   const history = useHistory()
+
+  const dispatch = useDispatch()
+
+  useEffect(async () => {
+    await axios.get('/diary/list').then(({ data }) => dispatch({ type: 'set', payload: data }))
+    return () => {
+      cleanup
+    }
+  }, [])
 
   return (
     <>
@@ -22,9 +31,7 @@ const DiaryList = () => {
           뒤로가기
         </Button>
       </Stack>
-
-      <GetDiary />
-      {diary.map((data, i) => {
+      {reducer.diaryReducer.map((data, i) => {
         return (
           <Card key={i} style={{ width: '18rem', marginBottom: '0.5rem' }}>
             <Card.Body>
@@ -36,7 +43,7 @@ const DiaryList = () => {
                   className="me-auto"
                   variant="primary"
                   onClick={() => {
-                    history.goBack()
+                    history.push('/diary/edit/' + data._id)
                   }}
                 >
                   수정
@@ -44,8 +51,16 @@ const DiaryList = () => {
                 <Button
                   className="ms-auto"
                   variant="danger"
-                  onClick={() => {
-                    history.goBack()
+                  onClick={async () => {
+                    await axios
+                      .delete('/delete', {
+                        data: {
+                          // 서버에서 req.body.{} 로 확인할 수 있다.
+                          _id: data._id,
+                        },
+                        withCredentials: true,
+                      })
+                      .then()
                   }}
                 >
                   삭제

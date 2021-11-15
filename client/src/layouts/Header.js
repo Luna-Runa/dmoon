@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Button, Container } from 'react-bootstrap'
+import { Navbar, Nav, Button, Container, Form } from 'react-bootstrap'
 import RegisterModal from '../components/modals/RegisterModal'
 import LogInModal from '../components/modals/LogInModal'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 
 const Header = () => {
   const [RegisterModalOn, setRegisterModalOn] = useState(false)
   const [LogInModalOn, setLogInModalOn] = useState(false)
+
+  const history = useHistory()
+
+  const reducer = useSelector(state => state)
 
   return (
     <>
@@ -29,18 +35,29 @@ const Header = () => {
                   친구
                 </Nav.Link>
               </Nav>
-              <Nav className="ms-auto">
-                <Nav.Link>
-                  <Button variant="primary" onClick={() => setLogInModalOn(true)}>
-                    로그인
-                  </Button>
-                </Nav.Link>
-                <Nav.Link>
-                  <Button variant="secondary" onClick={() => setRegisterModalOn(true)}>
-                    회원가입
-                  </Button>
-                </Nav.Link>
-              </Nav>
+              {reducer.sessionReducer[0].id ? (
+                <>
+                  <Form.Label>@{reducer.sessionReducer[0].id}</Form.Label>
+                  <Nav.Link>
+                    <Button variant="primary" onClick={() => history.push('/info')}>
+                      내 정보
+                    </Button>
+                  </Nav.Link>
+                </>
+              ) : (
+                <Nav className="ms-auto">
+                  <Nav.Link>
+                    <Button variant="primary" onClick={() => setLogInModalOn(true)}>
+                      로그인
+                    </Button>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Button variant="secondary" onClick={() => setRegisterModalOn(true)}>
+                      회원가입
+                    </Button>
+                  </Nav.Link>
+                </Nav>
+              )}
             </Navbar.Collapse>
           </Container>
         </Navbar>

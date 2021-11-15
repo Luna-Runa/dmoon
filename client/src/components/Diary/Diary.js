@@ -9,7 +9,7 @@ const Diary = () => {
   const [todoText, setTodoText] = useState('')
   const [saveAlert, setSaveAlert] = useState(false)
 
-  const { push } = useHistory()
+  const history = useHistory()
 
   const moods = [
     { name: '행복함', value: '1' },
@@ -20,11 +20,13 @@ const Diary = () => {
   ]
 
   useEffect(() => {
+    let mounted = true
     if (saveAlert === true) {
       setTimeout(() => {
         setSaveAlert(false)
       }, 2000)
     }
+    return () => (mounted = false)
   }, [saveAlert])
 
   return (
@@ -73,13 +75,11 @@ const Diary = () => {
       <Stack direction="horizontal" gap={3}>
         <Button
           className="mb-3"
-          onClick={() => {
-            axios
+          onClick={async () => {
+            await axios
               .post('/diary/add', { mood, todoBool, todoText })
               .then(setSaveAlert(true))
-              .catch(err => {
-                console.log(err)
-              })
+              .catch(err => console.log(err))
           }}
         >
           저장
@@ -89,7 +89,7 @@ const Diary = () => {
           className="mb-3 ms-auto"
           variant="info"
           onClick={() => {
-            push('/diary/list')
+            history.push('/diary/list')
           }}
         >
           목록

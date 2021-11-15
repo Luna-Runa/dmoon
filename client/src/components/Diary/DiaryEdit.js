@@ -1,9 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect, memo } from 'react'
+import { ToggleButton, ButtonGroup, FormControl, InputGroup, Button, Alert, Stack, Form } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const DiaryEdit = () => {
+  const reducer = useSelector(state => state)
+  const history = useHistory()
+  const params = useParams()
+
+  const data = reducer.diaryReducer.find(data => data._id === params.id)
+
+  const moods = [
+    { name: '행복함', value: '1' },
+    { name: '즐거움', value: '2' },
+    { name: '보통', value: '3' },
+    { name: '그저그럼', value: '4' },
+    { name: '기분나쁨', value: '5' },
+  ]
+
+  const [mood, setMood] = useState(moods.find(temp => temp.name === data.mood).value)
+  const [todoBool, setTodoBool] = useState(data.todoBool)
+  const [todoText, setTodoText] = useState(data.todoText)
+  const [saveAlert, setSaveAlert] = useState(false)
+
+  useEffect(() => {
+    let mounted = true
+    if (saveAlert === true) {
+      setTimeout(() => {
+        setSaveAlert(false)
+      }, 2000)
+    }
+    return () => (mounted = false)
+  }, [saveAlert])
+
   return (
     <>
-      <h3> 오늘의 기분 </h3>
+      <h3> {data.date} 수정 페이지 </h3>
       <br />
       <ButtonGroup className="mb-4">
         {moods.map((radio, idx) => (
@@ -38,6 +72,7 @@ const DiaryEdit = () => {
           성공
         </ToggleButton>
         <FormControl
+          value={todoText}
           onChange={e => {
             setTodoText(e.target.value)
           }}
@@ -47,23 +82,23 @@ const DiaryEdit = () => {
       <Stack direction="horizontal" gap={3}>
         <Button
           className="mb-3"
-          onClick={() => {
-            axios
-              .post('/diary/add', { mood, todoBool, todoText })
-              .then(setSaveAlert(true))
-              .catch(err => {
-                console.log(err)
+          onClick={async () => {
+            await axios
+              .put(`/diary/edit/${params.id}`, { _id: data._id, mood, todoBool, todoText })
+              .then(res => {
+                if (res.data.message === true) setSaveAlert(true)
               })
+              .catch(err => console.log(err))
           }}
         >
-          저장
+          수정
         </Button>
 
         <Button
           className="mb-3 ms-auto"
           variant="info"
           onClick={() => {
-            push('/diary/list')
+            history.push('/diary/list')
           }}
         >
           목록
@@ -71,7 +106,7 @@ const DiaryEdit = () => {
       </Stack>
 
       <Alert show={saveAlert} variant="success">
-        저장에 성공했습니다!
+        수정에 성공했습니다!
       </Alert>
     </>
   )

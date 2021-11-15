@@ -1,32 +1,50 @@
 import React from 'react'
 import Search from './Search'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 const Friends = () => {
+  const reducer = useSelector(state => state)
   return (
     <div>
       <Search />
 
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>테스트 계정</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@Test_account2</Card.Subtitle>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>테스트 계정</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@Test_account2</Card.Subtitle>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
-        <Card.Body>
-          <Card.Text>Test for account</Card.Text>
-          <Card.Subtitle className="mb-2 text-muted">@temp_111</Card.Subtitle>
-        </Card.Body>
-      </Card>
+      {reducer.userReducer.map((data, i) => {
+        if (!isEmpty(data)) {
+          return (
+            <Card key={i} style={{ width: '18rem', marginBottom: '0.5rem' }}>
+              <Card.Body>
+                <Card.Text>{data.name}</Card.Text>
+                <Card.Subtitle className="mb-2 text-muted">{data.id}</Card.Subtitle>
+                <Button
+                  className="me-auto"
+                  variant="primary"
+                  onClick={() => {
+                    history.push('/diary/edit/' + data._id)
+                  }}
+                >
+                  친구 추가
+                </Button>
+              </Card.Body>
+            </Card>
+          )
+        }
+      })}
     </div>
   )
+}
+
+const isEmpty = function (value) {
+  if (
+    value == '' ||
+    value == null ||
+    value == undefined ||
+    (value != null && typeof value == 'object' && !Object.keys(value).length)
+  ) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export default Friends

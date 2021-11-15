@@ -7,10 +7,10 @@ import reportWebVitals from './reportWebVitals'
 import './bootstrap.min.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { combineReducers, createStore } from 'redux'
 
 // 공유할 state
-function reducer(state = [{}], action) {
+function diaryReducer(state = [{}], action) {
   if (action.type === 'set') {
     const changeState = [...action.payload]
     return changeState
@@ -18,8 +18,23 @@ function reducer(state = [{}], action) {
   return state
 }
 
-const store = createStore(reducer)
+function userReducer(state = [{}], action) {
+  if (action.type === 'set') {
+    const changeState = [...action.payload]
+    return changeState
+  }
+  return state
+}
 
+function sessionReducer(state = [{}], action) {
+  if (action.type === 'set') {
+    const changeState = [...action.payload]
+    return changeState
+  }
+  return state
+}
+
+const store = createStore(combineReducers({ diaryReducer, userReducer, sessionReducer }))
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
