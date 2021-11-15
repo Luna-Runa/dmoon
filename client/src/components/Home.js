@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap'
 
 const Home = () => {
   return (
-    <div>
+    <>
       <h3> 타임라인 </h3>
       <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
         <Card.Body>
@@ -21,7 +21,7 @@ const Home = () => {
           <Card.Text>성공 운동</Card.Text>
         </Card.Body>
       </Card>
-    </div>
+    </>
   )
 }
 

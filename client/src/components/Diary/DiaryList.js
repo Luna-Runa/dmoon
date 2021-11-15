@@ -5,11 +5,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 const DiaryList = () => {
-  const reducer = useSelector(state => state)
   const history = useHistory()
 
+  const reducer = useSelector(state => state)
   const dispatch = useDispatch()
-
   useEffect(async () => {
     await axios.get('/diary/list').then(({ data }) => dispatch({ type: 'set', payload: data }))
     return () => {

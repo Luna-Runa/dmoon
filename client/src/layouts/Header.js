@@ -32,7 +32,7 @@ const Header = () => {
                   일기장
                 </Nav.Link>
                 <Nav.Link as={Link} to="/friends">
-                  친구
+                  유저 검색
                 </Nav.Link>
               </Nav>
               {reducer.sessionReducer[0].id ? (

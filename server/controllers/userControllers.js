@@ -28,8 +28,6 @@ export const userRegisterController = (req, res) => {
 export const userLogInController = (req, res) => {
   console.log(req.body);
 
-  let { id, password } = req.body;
-
   res.send(true);
 };
 
@@ -72,7 +70,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 export const userFindController = (req, res) => {
-  var 검색조건 = [
+  let query = [
     {
       $search: {
         index: "idSearch",
@@ -85,7 +83,7 @@ export const userFindController = (req, res) => {
     { $project: { id: 1, name: 1 } },
   ];
 
-  User.aggregate(검색조건, function (err, users) {
+  User.aggregate(query, function (err, users) {
     if (err) return res.status(500).send({ error: "database failure" });
     console.log(users);
     res.send(users);
