@@ -54,9 +54,8 @@ const LogInModal = ({ show, onHide }) => {
                 await axios
                   .post('/login', { id, password })
                   .then(res => {
-                    console.log([res])
-                    dispatch({ type: 'set', payload: [{ id: id }] })
-                    console.log(reducer.sessionReducer[0].id)
+                    console.log(res)
+                    dispatch({ type: 'set', payload: [{ id: id, name: name }] })
                     if (res.data) setSaveAlert(true)
                     else setFalseAlert(true)
                   })

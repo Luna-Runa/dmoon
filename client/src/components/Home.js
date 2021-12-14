@@ -4,8 +4,8 @@ import { Card } from 'react-bootstrap'
 const Home = () => {
   return (
     <>
-      <h3> 타임라인 </h3>
-      <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
+      <h3> 환영합니다 테스트용님. </h3>
+      {/* <Card style={{ width: '18rem', marginBottom: '0.5rem' }}>
         <Card.Body>
           <a>@Test_account 💕1</a>
           <Card.Title>즐거움</Card.Title>
@@ -20,7 +20,7 @@ const Home = () => {
           <Card.Subtitle className="mb-2 text-muted">2021. 11. 3.</Card.Subtitle>
           <Card.Text>성공 운동</Card.Text>
         </Card.Body>
-      </Card>
+      </Card> */}
     </>
   )
 }

@@ -37,7 +37,7 @@ const Header = () => {
               </Nav>
               {reducer.sessionReducer[0].id ? (
                 <>
-                  <Form.Label>@{reducer.sessionReducer[0].id}</Form.Label>
+                  <Form.Label>테스트용(@{reducer.sessionReducer[0].id})</Form.Label>
                   <Nav.Link>
                     <Button variant="primary" onClick={() => history.push('/info')}>
                       내 정보
