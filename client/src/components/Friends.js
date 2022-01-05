@@ -1,5 +1,5 @@
 import React from 'react'
-import Search from './Search'
+import Search from './search'
 import { Card, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 
