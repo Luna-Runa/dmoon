@@ -68,7 +68,10 @@ passport.serializeUser(function (user, done) {
 //사용자가 요구할 때마다 호출
 passport.deserializeUser(function (id, done) {
   User.findOne({ id: id }, function (err, user) {
-    console.log(id);
+    console.log("여기서 쿠키랑 비교?? 로그아웃 만들어주세요" + id);
+    console.log("내정보도 만들어주세요");
+    console.log("심심하시면 일기장 로그인 여부도 확인해주세요");
+    console.log("친구추가도 저랑 친구추가해놔주세요");
     done(null, user);
   });
 });
