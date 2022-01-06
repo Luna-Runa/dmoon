@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { useSelector } from 'react-redux'
 import { ToggleButton, ButtonGroup, FormControl, InputGroup, Button, Alert, Stack, Form } from 'react-bootstrap'
 import axios from 'axios'
 
@@ -10,6 +11,8 @@ const Diary = () => {
   const [saveAlert, setSaveAlert] = useState(false)
 
   const history = useHistory()
+  
+  const reducer = useSelector(state => state)
 
   const moods = [
     { name: '행복함', value: '1' },
@@ -29,7 +32,7 @@ const Diary = () => {
     return () => (mounted = false)
   }, [saveAlert])
 
-  return (
+  return (<>{reducer.sessionReducer[0].id ? (
     <>
       <h3> 오늘의 기분 </h3>
       <br />
@@ -100,6 +103,7 @@ const Diary = () => {
         저장에 성공했습니다!
       </Alert>
     </>
+    ) : (<>로그인 해주세요</>)}</>
   )
 }
 
