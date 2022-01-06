@@ -46,6 +46,15 @@ reactRouter.post("/login", function(req, res) {
     });
   })(req, res);
 });
+reactRouter.get("/logout", function(req, res) {
+  // request.user 데이터 삭제
+  // session store에 있는 passport 데이터 삭제
+  req.logout();
+
+  // 리다이렉트 대신 결과값으로 1만 보냄(성공을 의미)
+  // 실패하는 경우 처리도 필요할까? 후에 필요할 수도 있음.
+  res.send('1'); 
+})
 
 passport.authenticate("local", { failureFlash : "F"});
 
