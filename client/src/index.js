@@ -11,7 +11,7 @@ import { combineReducers, createStore } from 'redux'
 
 // 공유할 state
 function diaryReducer(state = [{}], action) {
-  if (action.type === 'set') {
+  if (action.type === 'diary') {
     const changeState = [...action.payload]
     return changeState
   }
@@ -19,7 +19,7 @@ function diaryReducer(state = [{}], action) {
 }
 
 function userReducer(state = [{}], action) {
-  if (action.type === 'set') {
+  if (action.type === 'user') {
     const changeState = [...action.payload]
     return changeState
   }
@@ -27,14 +27,21 @@ function userReducer(state = [{}], action) {
 }
 
 function sessionReducer(state = [{}], action) {
-  if (action.type === 'set') {
+  if (action.type === 'session') {
     const changeState = [...action.payload]
     return changeState
   }
   return state
 }
 
-const store = createStore(combineReducers({ diaryReducer, userReducer, sessionReducer }))
+const store = createStore(
+  combineReducers({
+    diaryReducer,
+    userReducer,
+    sessionReducer,
+  }),
+)
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

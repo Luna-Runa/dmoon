@@ -35,9 +35,12 @@ const Header = () => {
                   유저 검색
                 </Nav.Link>
               </Nav>
+              {console.log(reducer)}
               {reducer.sessionReducer[0].id ? (
                 <>
-                  <Form.Label>테스트용(@{reducer.sessionReducer[0].id})</Form.Label>
+                  <Form.Label>
+                    {reducer.sessionReducer[0].name}(@{reducer.sessionReducer[0].id})
+                  </Form.Label>
                   <Nav.Link>
                     <Button variant="primary" onClick={() => history.push('/info')}>
                       내 정보

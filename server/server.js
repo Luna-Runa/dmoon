@@ -8,6 +8,7 @@ import methodOverride from "method-override";
 import passport from "passport";
 import passportLocal from "passport-local";
 import expressSession from "express-session";
+import connectFlash from "connect-flash";
 /* import router from "./routes/mainRouter.js"; */
 
 dotenv.config();
@@ -29,6 +30,7 @@ server.use(
 );
 server.use(passport.initialize());
 server.use(passport.session());
+server.use(connectFlash());
 
 server.use(reactRouter);
 

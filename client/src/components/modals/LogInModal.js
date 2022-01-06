@@ -9,8 +9,6 @@ const LogInModal = ({ show, onHide }) => {
   const [saveAlert, setSaveAlert] = useState(false)
   const [falseAlert, setFalseAlert] = useState(false)
 
-  const reducer = useSelector(state => state)
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -18,7 +16,8 @@ const LogInModal = ({ show, onHide }) => {
     if (saveAlert === true) {
       setTimeout(() => {
         setSaveAlert(false)
-      }, 2000)
+        onHide(true)
+      }, 1000)
     }
 
     if (falseAlert === true) {
@@ -54,10 +53,11 @@ const LogInModal = ({ show, onHide }) => {
                 await axios
                   .post('/login', { id, password })
                   .then(res => {
-                    console.log(res)
-                    dispatch({ type: 'set', payload: [{ id: id, name: name }] })
-                    if (res.data) setSaveAlert(true)
-                    else setFalseAlert(true)
+                    console.log(res.data)
+                    if (res.data) {
+                      dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name }] })
+                      setSaveAlert(true)
+                    } else setFalseAlert(true)
                   })
                   .catch(err => console.log(err))
               }}

@@ -23,7 +23,31 @@ reactRouter.get("/css/bootstrap.min.css", (req, res) => {
 }); */
 
 reactRouter.post("/register", userRegisterController);
-reactRouter.post("/login", passport.authenticate("local"), userLogInController);
+
+reactRouter.get("/temp", userLogInController);
+
+/* reactRouter.post("/login", passport.authenticate("local", {
+  failureFlash : true,
+  successFlash : "S"
+}), 
+  function(req, res) {
+    console.log("req.user : " + req.user);
+    res.send(req.user);
+  }); */
+
+reactRouter.post("/login", function(req, res) {
+  passport.authenticate('local', function(err, user, info) {
+    if(err) return next(err);
+    if(!user) return res.send(false);
+    
+    req.login(user, function(err) {
+      if(err) return next(err);
+      return res.send(user);
+    });
+  })(req, res);
+});
+
+passport.authenticate("local", { failureFlash : "F"});
 
 reactRouter.get("/info", isLogin, userInfoController);
 

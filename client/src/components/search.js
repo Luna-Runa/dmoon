@@ -22,7 +22,7 @@ const Search = () => {
           onClick={async () => {
             await axios
               .post('/friends/search', { searchText })
-              .then(res => dispatch({ type: 'set', payload: res.data }))
+              .then(res => dispatch({ type: 'user', payload: res.data }))
               .catch(err => {
                 console.log(err)
               })

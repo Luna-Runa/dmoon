@@ -60,16 +60,21 @@ passport.use(
   )
 );
 
+//최초 로그인시 초기화
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-//세션 해석
+//사용자가 요구할 때마다 호출
 passport.deserializeUser(function (id, done) {
-  done(null, {});
+  User.findOne({ id: id }, function (err, user) {
+    console.log(id);
+    done(null, user);
+  });
 });
 
 export const userFindController = (req, res) => {
+  console.log(req.body);
   let query = [
     {
       $search: {
