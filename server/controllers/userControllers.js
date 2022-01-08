@@ -5,7 +5,6 @@ import passportLocal from "passport-local";
 const LocalStrategy = passportLocal.Strategy;
 
 export const userRegisterController = (req, res) => {
-  console.log(req.body);
   let { id, name, password, confirmPassword } = req.body;
 
   if (id.length == 0 && name.length == 0 && !(password === confirmPassword))
@@ -20,17 +19,34 @@ export const userRegisterController = (req, res) => {
   user.save((err) => {
     if (err) return res.send(false);
 
-    console.log("등록 완료");
     res.send(true);
   });
 };
 
+//실행순서 : authenticate() -> LocalStrategy 생성자 -> serializeUser()
 export const userLogInController = (req, res) => {
-  console.log(req.body);
+  console.log(`유저로그인컨트롤러 : ${req.body.id} ${req.body.password}`);
+  passport.authenticate("local", function (err, user, info) {
+    //여기서의 err, user, info가 done으로 받은 인자들
+    if (err) return next(err);
+    if (!user) return res.send(false);
 
-  res.send(true);
+    req.login(user, function (err) {
+      if (err) return next(err);
+      return res.send({ id: user.id, name: user.name });
+    });
+  })(req, res);
 };
 
+export const userLogOutController = (req, res) => {
+  // 세션 부수고 쿠키도 강제삭제
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid");
+    res.send(true);
+  });
+};
+
+//////////////////////////세션관리부분//////////////////////////
 passport.use(
   new LocalStrategy(
     {
@@ -44,16 +60,11 @@ passport.use(
       User.findOne({ id: inputId }, function (err, res) {
         if (err) return done(err);
 
-        if (!res)
-          return done(null, false, {
-            message: "아이디와 비밀번호를 확인해주세요.",
-          });
+        if (!res) return done(null, false, { message: "not found id" });
         if (inputPassword == res.password) {
-          return done(null, res, { message: "s" });
+          return done(null, res);
         } else {
-          return done(null, false, {
-            message: "아이디와 비밀번호를 확인해주세요.",
-          });
+          return done(null, false, { message: "not equal password" });
         }
       });
     }
@@ -62,19 +73,19 @@ passport.use(
 
 //최초 로그인시 초기화
 passport.serializeUser(function (user, done) {
+  console.log("serial : " + user.id);
   done(null, user.id);
 });
 
-//사용자가 요구할 때마다 호출
+//이후 사용자가 세션 정보를 요구할 때마다 호출
 passport.deserializeUser(function (id, done) {
+  console.log("deserial : " + id);
   User.findOne({ id: id }, function (err, user) {
-    console.log("여기서 쿠키랑 비교?? 로그아웃 만들어주세요" + id);
-    console.log("내정보도 만들어주세요");
-    console.log("심심하시면 일기장 로그인 여부도 확인해주세요");
-    console.log("친구추가도 저랑 친구추가해놔주세요");
     done(null, user);
   });
 });
+
+////////////////////////////////////////////////////////////////
 
 export const userFindController = (req, res) => {
   console.log(req.body);
@@ -98,6 +109,7 @@ export const userFindController = (req, res) => {
   });
 };
 
-export const userInfoController = (req, res, next) => {
-  res.send("세션");
+export const userInfoController = (req, res) => {
+  //req.user; //deserializeUser에서 보낸 user
+  res.send({ id: req.user.id, name: req.user.name });
 };

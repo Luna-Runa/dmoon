@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Form, Button, Alert } from 'react-bootstrap'
 import axios from 'axios'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const LogInModal = ({ show, onHide }) => {
   const [id, setId] = useState('')
@@ -25,8 +25,16 @@ const LogInModal = ({ show, onHide }) => {
         setFalseAlert(false)
       }, 2000)
     }
-    return () => (mounted = false)
+    return () => {
+      mounted = false
+    }
   }, [saveAlert, falseAlert])
+
+  useEffect(() => {
+    setId('')
+    setPassword('')
+    return () => {}
+  }, [show])
 
   return (
     <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -37,12 +45,17 @@ const LogInModal = ({ show, onHide }) => {
         <Form>
           <Form.Group className="mb-3" controlId="id">
             <Form.Label>아이디</Form.Label>
-            <Form.Control type="email" placeholder="Enter id" onChange={e => setId(e.currentTarget.value)} />
+            <Form.Control type="email" placeholder="Enter id" value={id} onChange={e => setId(e.currentTarget.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>비밀번호</Form.Label>
-            <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.currentTarget.value)} />
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.currentTarget.value)}
+            />
           </Form.Group>
 
           <div className="d-grid gap-2 my-3">
@@ -53,11 +66,13 @@ const LogInModal = ({ show, onHide }) => {
                 await axios
                   .post('/login', { id, password })
                   .then(res => {
-                    console.log(res.data)
                     if (res.data) {
                       dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name }] })
                       setSaveAlert(true)
-                    } else setFalseAlert(true)
+                    } else {
+                      setFalseAlert(true)
+                      setPassword('')
+                    }
                   })
                   .catch(err => console.log(err))
               }}

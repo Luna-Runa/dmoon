@@ -11,7 +11,7 @@ const Diary = () => {
   const [saveAlert, setSaveAlert] = useState(false)
 
   const history = useHistory()
-  
+
   const reducer = useSelector(state => state)
 
   const moods = [
@@ -32,78 +32,80 @@ const Diary = () => {
     return () => (mounted = false)
   }, [saveAlert])
 
-  return (<>{reducer.sessionReducer[0].id ? (
+  return (
     <>
-      <h3> 오늘의 기분 </h3>
-      <br />
-      <ButtonGroup className="mb-4">
-        {moods.map((radio, idx) => (
-          <ToggleButton
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant={'outline-primary'}
-            name="mood"
-            value={radio.value}
-            checked={mood === radio.value}
-            onChange={e => setMood(e.currentTarget.value)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
-      </ButtonGroup>
-      <br />
+      {reducer.sessionReducer[0].id ? (
+        <>
+          <h3> 오늘의 기분 </h3>
+          <ButtonGroup className="mb-4">
+            {moods.map((radio, idx) => (
+              <ToggleButton
+                key={idx}
+                id={`radio-${idx}`}
+                type="radio"
+                variant={'outline-primary'}
+                name="mood"
+                value={radio.value}
+                checked={mood === radio.value}
+                onChange={e => setMood(e.currentTarget.value)}
+              >
+                {radio.name}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
 
-      <h3> 한 일들 </h3>
-      <br />
+          <h3> 한 일들 </h3>
 
-      <InputGroup className="mb-3">
-        <ToggleButton
-          id="toggle-check"
-          type="checkbox"
-          variant="outline-success"
-          checked={todoBool}
-          value="1"
-          onChange={e => setTodoBool(e.currentTarget.checked)}
-        >
-          성공
-        </ToggleButton>
-        <FormControl
-          onChange={e => {
-            setTodoText(e.target.value)
-          }}
-        />
-      </InputGroup>
+          <InputGroup className="mb-3">
+            <ToggleButton
+              id="toggle-check"
+              type="checkbox"
+              variant="outline-success"
+              checked={todoBool}
+              value="1"
+              onChange={e => setTodoBool(e.currentTarget.checked)}
+            >
+              성공
+            </ToggleButton>
+            <FormControl
+              onChange={e => {
+                setTodoText(e.target.value)
+              }}
+            />
+          </InputGroup>
 
-      <Stack direction="horizontal" gap={3}>
-        <Button
-          className="mb-3"
-          onClick={async () => {
-            await axios
-              .post('/diary/add', { mood, todoBool, todoText })
-              .then(setSaveAlert(true))
-              .catch(err => console.log(err))
-          }}
-        >
-          저장
-        </Button>
+          <Stack direction="horizontal" gap={3}>
+            <Button
+              className="mb-3"
+              onClick={async () => {
+                await axios
+                  .post('/diary/add', { mood, todoBool, todoText })
+                  .then(setSaveAlert(true))
+                  .catch(err => console.log(err))
+              }}
+            >
+              저장
+            </Button>
 
-        <Button
-          className="mb-3 ms-auto"
-          variant="info"
-          onClick={() => {
-            history.push('/diary/list')
-          }}
-        >
-          목록
-        </Button>
-      </Stack>
+            <Button
+              className="mb-3 ms-auto"
+              variant="info"
+              onClick={() => {
+                history.push('/diary/list')
+              }}
+            >
+              목록
+            </Button>
+          </Stack>
 
-      <Alert show={saveAlert} variant="success">
-        저장에 성공했습니다!
-      </Alert>
+          <Alert show={saveAlert} variant="success">
+            저장에 성공했습니다!
+          </Alert>
+        </>
+      ) : (
+        <>로그인 해주세요</>
+      )}
     </>
-    ) : (<>로그인 해주세요</>)}</>
   )
 }
 

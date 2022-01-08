@@ -18,6 +18,7 @@ const Header = () => {
     <>
       <RegisterModal show={RegisterModalOn} onHide={() => setRegisterModalOn(false)} />
       <LogInModal show={LogInModalOn} onHide={() => setLogInModalOn(false)} />
+
       <header style={{ marginBottom: '1rem' }}>
         <Navbar bg="light" expand="lg">
           <Container>
@@ -35,18 +36,16 @@ const Header = () => {
                   유저 검색
                 </Nav.Link>
               </Nav>
-              {console.log(reducer)}
+              {/* {console.log(reducer)} */}
               {reducer.sessionReducer[0].id ? (
-                <>
-                  <Form.Label>
+                <Nav className="ms-auto">
+                  <Navbar.Text className="me-3">
                     {reducer.sessionReducer[0].name}(@{reducer.sessionReducer[0].id})
-                  </Form.Label>
-                  <Nav.Link>
-                    <Button variant="primary" onClick={() => history.push('/info')}>
-                      내 정보
-                    </Button>
-                  </Nav.Link>
-                </>
+                  </Navbar.Text>
+                  <Button className="me-auto" variant="primary" onClick={() => history.push('/info')}>
+                    내 정보
+                  </Button>
+                </Nav>
               ) : (
                 <Nav className="ms-auto">
                   <Nav.Link>

@@ -1,52 +1,69 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
-import { Button } from 'react-bootstrap'
+import { Button, Stack } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link, Redirect } from 'react-router-dom'
 
 const Info = () => {
   const dispatch = useDispatch()
   const reducer = useSelector(state => state)
 
+  useEffect(async () => {
+    await axios
+      .get('/info')
+      .then(res => dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name }] }))
+    return () => {
+      cleanup
+    }
+  }, [])
+
   return (
     <>
-    {
-      reducer.sessionReducer[0].id ? (
-        <>
-      <Button
-        className="mb-3"
-        onClick={async () => {
-          await axios
-            .get('/info')
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-        }}
-      >
-        저장
-      </Button>
-      
-
-      <Button
-        className="mb-3"
-        onClick={async () => {
-          await axios
-            .get('/logout')
-            .then(res => {
-              if(res.data == 1) {
-                // 로그아웃 처리
-                // dispatch를 이용하여 state에 저장된 유저 정보 수동으로 삭제
-                dispatch({ type: 'session', payload: [{ id: undefined, name: undefined }] })
-              }
-            })
-            .catch(err => console.log(err))
-        }}
-      >
-        로그아웃
-      </Button>
-      </>
+      {reducer.sessionReducer[0].id ? (
+        <Stack gap={3}>
+          <div>
+            <p>{reducer.sessionReducer[0].name}</p>
+            <p className="text-muted" style={{ fontSize: '90%' }}>
+              @{reducer.sessionReducer[0].id}
+            </p>
+            <p style={{ color: 'red' }}>
+              집중 목표 : {reducer.sessionReducer[0].goal ? reducer.sessionReducer[0].goal : '미설정'}
+            </p>
+            <Link to="/friends" style={{ textDecoration: 'none', color: '#70a1ff' }}>
+              친구 {reducer.sessionReducer[0].friends ? reducer.sessionReducer[0].friends : '0명'}
+            </Link>
+          </div>
+          <div>
+            <Button
+              className="mb-5"
+              //onClick={}
+            >
+              프로필 수정
+            </Button>
+          </div>
+          <div className="ms-auto">
+            <Button
+              variant="danger"
+              onClick={async () => {
+                await axios
+                  .get('/logout')
+                  .then(res => {
+                    if (res.data) {
+                      dispatch({ type: 'session', payload: [{ id: undefined, name: undefined }] })
+                    }
+                  })
+                  .catch(err => console.log(err))
+              }}
+            >
+              로그아웃
+            </Button>
+          </div>
+        </Stack>
       ) : (
-        <>로그인 해주세요</>
-      )
-    }
+        <>
+          <Redirect to="/" />
+        </>
+      )}
     </>
   )
 }

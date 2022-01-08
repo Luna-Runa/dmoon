@@ -15,7 +15,8 @@ const RegisterModal = ({ show, onHide }) => {
     if (saveAlert === true) {
       setTimeout(() => {
         setSaveAlert(false)
-      }, 2000)
+        onHide(true)
+      }, 1000)
     }
 
     if (falseAlert === true) {
@@ -26,6 +27,14 @@ const RegisterModal = ({ show, onHide }) => {
     return () => (mounted = false)
   }, [saveAlert, falseAlert])
 
+  useEffect(() => {
+    setId('')
+    setName('')
+    setPassword('')
+    setConfirmPassword('')
+    return () => {}
+  }, [show])
+
   return (
     <Modal show={show} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
@@ -35,22 +44,33 @@ const RegisterModal = ({ show, onHide }) => {
         <Form>
           <Form.Group className="mb-3" controlId="id">
             <Form.Label>아이디</Form.Label>
-            <Form.Control placeholder="Enter id" onChange={e => setId(e.currentTarget.value)} />
+            <Form.Control value={id} placeholder="Enter id" onChange={e => setId(e.currentTarget.value)} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>닉네임</Form.Label>
-            <Form.Control type="email" placeholder="Enter name" onChange={e => setName(e.currentTarget.value)} />
+            <Form.Control
+              value={name}
+              type="email"
+              placeholder="Enter name"
+              onChange={e => setName(e.currentTarget.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="password">
             <Form.Label>비밀번호</Form.Label>
-            <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.currentTarget.value)} />
+            <Form.Control
+              value={password}
+              type="password"
+              placeholder="Password"
+              onChange={e => setPassword(e.currentTarget.value)}
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="passwordConfirm">
             <Form.Label>비밀번호 확인</Form.Label>
             <Form.Control
+              value={confirmPassword}
               type="password"
               placeholder="Confirm password"
               onChange={e => setConfirmPassword(e.currentTarget.value)}
@@ -66,7 +86,11 @@ const RegisterModal = ({ show, onHide }) => {
                   .post('/register', { id, name, password, confirmPassword })
                   .then(res => {
                     if (res.data) setSaveAlert(true)
-                    else setFalseAlert(true)
+                    else {
+                      setFalseAlert(true)
+                      setPassword('')
+                      setConfirmPassword('')
+                    }
                   })
                   .catch(err => console.log(err))
               }}
