@@ -32,7 +32,7 @@ const Header = () => {
                 <Nav.Link as={Link} to="/diary">
                   일기장
                 </Nav.Link>
-                <Nav.Link as={Link} to="/friends">
+                <Nav.Link as={Link} to="/search">
                   유저 검색
                 </Nav.Link>
               </Nav>

@@ -34,7 +34,9 @@ const Diary = () => {
 
   return (
     <>
-      {reducer.sessionReducer[0].id ? (
+      {!reducer.sessionReducer[0].id ? (
+        <>로그인 해주세요</>
+      ) : (
         <>
           <h3> 오늘의 기분 </h3>
           <ButtonGroup className="mb-4">
@@ -102,8 +104,6 @@ const Diary = () => {
             저장에 성공했습니다!
           </Alert>
         </>
-      ) : (
-        <>로그인 해주세요</>
       )}
     </>
   )

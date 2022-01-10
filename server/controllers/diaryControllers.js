@@ -44,7 +44,7 @@ export const diaryEditController = (req, res) => {
         todoText: req.body.todoText,
       },
     },
-    (err, res2) => {
+    (err) => {
       if (err)
         return res.status(400).send({ error: "database delete failure" });
       console.log("수정완료");

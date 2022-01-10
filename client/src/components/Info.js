@@ -11,7 +11,9 @@ const Info = () => {
   useEffect(async () => {
     await axios
       .get('/info')
-      .then(res => dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name }] }))
+      .then(res =>
+        dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name, friends: res.data.friends }] }),
+      )
     return () => {
       cleanup
     }
@@ -30,7 +32,7 @@ const Info = () => {
               집중 목표 : {reducer.sessionReducer[0].goal ? reducer.sessionReducer[0].goal : '미설정'}
             </p>
             <Link to="/friends" style={{ textDecoration: 'none', color: '#70a1ff' }}>
-              친구 {reducer.sessionReducer[0].friends ? reducer.sessionReducer[0].friends : '0명'}
+              친구 {reducer.sessionReducer[0].friends ? reducer.sessionReducer[0].friends.length + '명' : '0명'}
             </Link>
           </div>
           <div>

@@ -86,7 +86,7 @@ const DiaryEdit = () => {
             await axios
               .put(`/diary/edit/${params.id}`, { _id: data._id, mood, todoBool, todoText })
               .then(res => {
-                if (res.data.message === true) setSaveAlert(true)
+                if (res.data) setSaveAlert(true)
               })
               .catch(err => console.log(err))
           }}

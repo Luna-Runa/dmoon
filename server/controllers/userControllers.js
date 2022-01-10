@@ -88,7 +88,6 @@ passport.deserializeUser(function (id, done) {
 ////////////////////////////////////////////////////////////////
 
 export const userFindController = (req, res) => {
-  console.log(req.body);
   let query = [
     {
       $search: {
@@ -104,12 +103,32 @@ export const userFindController = (req, res) => {
 
   User.aggregate(query, function (err, users) {
     if (err) return res.status(500).send({ error: "database failure" });
-    console.log(users);
     res.send(users);
   });
 };
 
 export const userInfoController = (req, res) => {
   //req.user; //deserializeUser에서 보낸 user
-  res.send({ id: req.user.id, name: req.user.name });
+  res.send({ id: req.user.id, name: req.user.name, friends: req.user.friends });
+};
+
+export const userFriendsAddController = (req, res) => {
+  //console.log(req.body); // { user: '~~~~', friends: '~~~~' }
+  ///// 앞으로 하고싶은것 : 이미 친구일 경우 친구삭제 버튼으로 대체? or 이미 친구입니다 메시지 전송
+  ///// 프론트 상태 : 그저 무지성 친구추가 활성화
+  ///// 백엔드 상태 : addToSet으로 중복일 경우 처리안함
+
+  User.updateOne(
+    { id: req.body.user },
+    {
+      $addToSet: {
+        friends: req.body.friends,
+      },
+    },
+    (err) => {
+      if (err)
+        return res.status(400).send({ error: "database update failure" });
+      res.send(true);
+    }
+  );
 };

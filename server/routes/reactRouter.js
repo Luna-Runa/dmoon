@@ -12,6 +12,7 @@ import {
   userFindController,
   userInfoController,
   userLogOutController,
+  userFriendsAddController,
 } from "../controllers/userControllers.js";
 /* import path from "path"; */
 
@@ -41,13 +42,15 @@ reactRouter.post("/login", userLogInController);
 reactRouter.get("/logout", userLogOutController);
 
 reactRouter.get("/info", isLogin, userInfoController);
+reactRouter.post("/friends/add", userFriendsAddController);
+//reactRouter.post("/friends/delete", userFriendsAddController); <<<<<< 구현차례!!
 
 reactRouter.get("/diary/list", diaryGetController);
 reactRouter.post("/diary/add", diaryAddController);
 reactRouter.put("/diary/edit/:id", diaryEditController);
 reactRouter.delete("/delete", diaryDeleteController);
 
-reactRouter.post("/friends/search", userFindController);
+reactRouter.post("/search", userFindController);
 
 /* reactRouter.get("*", (req, res) => {
   res.sendFile(index);
