@@ -1,5 +1,4 @@
 import express from "express";
-import passport from "passport";
 import {
   diaryGetController,
   diaryAddController,
@@ -25,18 +24,6 @@ reactRouter.get("/css/bootstrap.min.css", (req, res) => {
 }); */
 
 reactRouter.post("/register", userRegisterController);
-
-/* reactRouter.post("/login", function(req, res) {
-  passport.authenticate('local', function(err, user, info) {
-    if(err) return next(err);
-    if(!user) return res.send(false);
-    
-    req.login(user, function(err) {
-      if(err) return next(err);
-      return res.send(user);
-    });
-  })(req, res);
-}); */
 
 reactRouter.post("/login", userLogInController);
 reactRouter.get("/logout", userLogOutController);
