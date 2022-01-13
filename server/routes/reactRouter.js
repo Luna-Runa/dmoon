@@ -8,10 +8,12 @@ import {
 import {
   userRegisterController,
   userLogInController,
-  userFindController,
+  userSearchController,
   userInfoController,
   userLogOutController,
   userFriendsAddController,
+  userFriendsDeleteController,
+  userFriendsListController,
 } from "../controllers/userControllers.js";
 /* import path from "path"; */
 
@@ -24,20 +26,20 @@ reactRouter.get("/css/bootstrap.min.css", (req, res) => {
 }); */
 
 reactRouter.post("/register", userRegisterController);
-
 reactRouter.post("/login", userLogInController);
 reactRouter.get("/logout", userLogOutController);
 
 reactRouter.get("/info", isLogin, userInfoController);
 reactRouter.post("/friends/add", userFriendsAddController);
-//reactRouter.post("/friends/delete", userFriendsAddController); <<<<<< 구현차례!!
+reactRouter.delete("/friends/delete", userFriendsDeleteController);
+reactRouter.post("/friends/list", userFriendsListController);
 
 reactRouter.get("/diary/list", diaryGetController);
 reactRouter.post("/diary/add", diaryAddController);
 reactRouter.put("/diary/edit/:id", diaryEditController);
-reactRouter.delete("/delete", diaryDeleteController);
+reactRouter.delete("/diary/delete", diaryDeleteController);
 
-reactRouter.post("/search", userFindController);
+reactRouter.post("/search", userSearchController);
 
 /* reactRouter.get("*", (req, res) => {
   res.sendFile(index);

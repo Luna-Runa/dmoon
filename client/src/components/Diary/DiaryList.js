@@ -52,9 +52,9 @@ const DiaryList = () => {
                   variant="danger"
                   onClick={async () => {
                     await axios
-                      .delete('/delete', {
+                      .delete('/diary/delete', {
                         data: {
-                          // 서버에서 req.body.{} 로 확인할 수 있다.
+                          // withCredentials와 같이 써서 서버에서 req.body.{} 로 확인할 수 있다.
                           _id: data._id,
                         },
                         withCredentials: true,

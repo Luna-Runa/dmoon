@@ -87,7 +87,7 @@ passport.deserializeUser(function (id, done) {
 
 ////////////////////////////////////////////////////////////////
 
-export const userFindController = (req, res) => {
+export const userSearchController = (req, res) => {
   let query = [
     {
       $search: {
@@ -129,6 +129,32 @@ export const userFriendsAddController = (req, res) => {
       if (err)
         return res.status(400).send({ error: "database update failure" });
       res.send(true);
+    }
+  );
+};
+
+export const userFriendsDeleteController = (req, res) => {
+  console.log(req.body);
+  User.updateOne(
+    { id: req.body.user },
+    { $pull: { friends: req.body.friends } },
+    (err, res2) => {
+      if (err)
+        return res.status(400).send({ error: "database delete failure" });
+      console.log(`${req.body.user}의 친구 ${req.body.friends} 삭제완료`);
+      res.send({ message: "성공했습니다." });
+    }
+  );
+};
+
+export const userFriendsListController = (req, res) => {
+  User.find(
+    { id: { $in: req.body.friends } },
+    { _id: 0, id: 1, name: 1 },
+    (err, users) => {
+      if (err)
+        return res.status(400).send({ error: "database delete failure" });
+      res.send(users);
     }
   );
 };
