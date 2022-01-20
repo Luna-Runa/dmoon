@@ -2,26 +2,24 @@ import mongoose from "mongoose";
 
 const diarySchema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+      required: true,
+    },
+
     mood: {
       type: String,
       required: true,
     },
 
-    todoBool: {
-      type: Boolean,
+    todoArray: {
+      type: [{ todoBool: Boolean, todoText: String }],
+      default: undefined,
     },
 
-    todoText: {
-      type: String,
-    },
+    date: String,
 
-    date: {
-      type: String,
-    },
-
-    likes: {
-      type: Number,
-    },
+    likes: Number,
   },
   { versionKey: false }
 );

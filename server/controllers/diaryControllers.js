@@ -1,9 +1,12 @@
+import moment from "moment";
+import "moment/locale/ko.js";
 import Diary from "../models/diaryModel.js";
 
-export const diaryGetController = (req, res) => {
-  Diary.find((err, diaries) => {
+export const diaryListController = (req, res) => {
+  Diary.find({ id: req.body.id }, (err, diaries) => {
     if (err) return res.status(500).send({ error: "database failure" });
 
+    console.log(diaryListController);
     res.send(diaries);
   });
 };
@@ -11,17 +14,16 @@ export const diaryGetController = (req, res) => {
 export const diaryAddController = (req, res) => {
   const moods = ["행복함", "즐거움", "보통", "그저그럼", "기분나쁨"];
   console.log(req.body);
-  let { mood, todoBool, todoText } = req.body;
+  let { id, mood, todoBool, todoText } = req.body;
 
-  let time = new Date();
-  time = time.toLocaleDateString();
+  let time = moment().format("LLL");
 
   mood = moods[req.body.mood - 1];
 
   let diary = new Diary({
+    id,
     mood,
-    todoBool,
-    todoText,
+    todoArray: { todoBool, todoText },
     date: time,
   });
 

@@ -21,8 +21,8 @@ const DiaryEdit = () => {
   ]
 
   const [mood, setMood] = useState(moods.find(temp => temp.name === data.mood).value)
-  const [todoBool, setTodoBool] = useState(data.todoBool)
-  const [todoText, setTodoText] = useState(data.todoText)
+  const [todoBool, setTodoBool] = useState(data.todoArray[0].todoBool)
+  const [todoText, setTodoText] = useState(data.todoArray[0].todoText)
   const [saveAlert, setSaveAlert] = useState(false)
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  diaryGetController,
+  diaryListController,
   diaryAddController,
   diaryEditController,
   diaryDeleteController,
@@ -34,7 +34,7 @@ reactRouter.post("/friends/add", userFriendsAddController);
 reactRouter.delete("/friends/delete", userFriendsDeleteController);
 reactRouter.post("/friends/list", userFriendsListController);
 
-reactRouter.get("/diary/list", diaryGetController);
+reactRouter.post("/diary/list", diaryListController);
 reactRouter.post("/diary/add", diaryAddController);
 reactRouter.put("/diary/edit/:id", diaryEditController);
 reactRouter.delete("/diary/delete", diaryDeleteController);

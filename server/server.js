@@ -43,9 +43,6 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
   );
 });
 
-//views 폴더 인식과 ejs 사용 처리
-server.set("views", __dirname + "/views");
-
 server.use(cors());
 //static 파일 보관을 위해 해당 폴더 사용 선언
 //server.use(express.static(path.join(__dirname, 'react-build')))
