@@ -23,7 +23,8 @@ export const diaryAddController = (req, res) => {
   let diary = new Diary({
     id,
     mood,
-    todoArray: { todoBool, todoText },
+    todoBool,
+    todoText,
     date: time,
   });
 

@@ -33,49 +33,45 @@ const DiaryList = () => {
           뒤로가기
         </Button>
       </Stack>
-      {reducer.diaryReducer[0] &&
-        reducer.diaryReducer.map((data, i) => {
-          return (
-            <Card key={i} style={{ width: '18rem', marginBottom: '0.5rem' }}>
-              <Card.Body>
-                <Card.Title>{data.mood}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{data.date}</Card.Subtitle>
-                <Card.Text>
-                  {/* 한줄만 출력중. 임시 */}
-                  {data.todoArray[0].todoBool ? `✔ ${data.todoArray[0].todoText}` : `❌ ${data.todoArray[0].todoText}`}
-                </Card.Text>
-                <Stack direction="horizontal" gap={3}>
-                  <Button
-                    className="me-auto"
-                    variant="primary"
-                    onClick={() => {
-                      history.push('/diary/edit/' + data._id)
-                    }}
-                  >
-                    수정
-                  </Button>
-                  <Button
-                    className="ms-auto"
-                    variant="danger"
-                    onClick={async () => {
-                      await axios
-                        .delete('/diary/delete', {
-                          data: {
-                            // withCredentials와 같이 써서 서버에서 req.body.{} 로 확인할 수 있다.
-                            _id: data._id,
-                          },
-                          withCredentials: true,
-                        })
-                        .then()
-                    }}
-                  >
-                    삭제
-                  </Button>
-                </Stack>
-              </Card.Body>
-            </Card>
-          )
-        })}
+      {reducer.diaryReducer.map((data, i) => {
+        return (
+          <Card key={i} style={{ width: '18rem', marginBottom: '0.5rem' }}>
+            <Card.Body>
+              <Card.Title>{data.mood}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{data.date}</Card.Subtitle>
+              <Card.Text>{data.todoBool ? '✔ ' + data.todoText : '❌ ' + data.todoText}</Card.Text>
+              <Stack direction="horizontal" gap={3}>
+                <Button
+                  className="me-auto"
+                  variant="primary"
+                  onClick={() => {
+                    history.push('/diary/edit/' + data._id)
+                  }}
+                >
+                  수정
+                </Button>
+                <Button
+                  className="ms-auto"
+                  variant="danger"
+                  onClick={async () => {
+                    await axios
+                      .delete('/diary/delete', {
+                        data: {
+                          // withCredentials와 같이 써서 서버에서 req.body.{} 로 확인할 수 있다.
+                          _id: data._id,
+                        },
+                        withCredentials: true,
+                      })
+                      .then()
+                  }}
+                >
+                  삭제
+                </Button>
+              </Stack>
+            </Card.Body>
+          </Card>
+        )
+      })}
     </>
   )
 }

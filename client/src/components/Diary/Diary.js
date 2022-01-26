@@ -6,7 +6,8 @@ import axios from 'axios'
 
 const Diary = () => {
   const [mood, setMood] = useState('1')
-  const [todoList, setTodoList] = useState([{}])
+  const [todoBool, setTodoBool] = useState(false)
+  const [todoText, setTodoText] = useState('')
   const [saveAlert, setSaveAlert] = useState(false)
 
   const history = useHistory()
@@ -14,10 +15,6 @@ const Diary = () => {
   const reducer = useSelector(state => state)
 
   const user = reducer.sessionReducer[0]
-
-  const addList = () => {
-    //원래의 리스트 + 어쩌구 스스로 push를 만들어
-  }
 
   const moods = [
     { name: '행복함', value: '1' },
@@ -63,37 +60,30 @@ const Diary = () => {
 
           <h3> 한 일들 </h3>
 
-          {todoList.map((data, i) => {
-            return (
-              <InputGroup key={i} className="mb-3">
-                <ToggleButton
-                  id="toggle-check"
-                  type="checkbox"
-                  variant="outline-success"
-                  checked={data.todoBool}
-                  value="1"
-                  onChange={e => setTodoBool(e.currentTarget.checked)}
-                >
-                  성공
-                </ToggleButton>
-                <FormControl
-                  onChange={e => {
-                    setTodoText(e.target.value)
-                  }}
-                />
-              </InputGroup>
-            )
-          })}
-          <Button className="mb-3" onClick={setTodoList()}>
-            추가
-          </Button>
+          <InputGroup className="mb-3">
+            <ToggleButton
+              id="toggle-check"
+              type="checkbox"
+              variant="outline-success"
+              checked={todoBool}
+              value="1"
+              onChange={e => setTodoBool(e.currentTarget.checked)}
+            >
+              성공
+            </ToggleButton>
+            <FormControl
+              onChange={e => {
+                setTodoText(e.target.value)
+              }}
+            />
+          </InputGroup>
 
           <Stack direction="horizontal" gap={3}>
             <Button
               className="mb-3"
               onClick={async () => {
                 await axios
-                  .post('/diary/add', { id: user.id, mood, todoBool, todoText })
+                  .post('/diary/add', { mood, todoBool, todoText })
                   .then(setSaveAlert(true))
                   .catch(err => console.log(err))
               }}
