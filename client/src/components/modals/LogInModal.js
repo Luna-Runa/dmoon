@@ -62,12 +62,15 @@ const LogInModal = ({ show, onHide }) => {
             <Button
               variant="info"
               type="button"
-              onClick={async () => {
-                await axios
+              onClick={() => {
+                axios
                   .post('/login', { id, password })
                   .then(res => {
                     if (res.data) {
-                      dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name }] })
+                      dispatch({
+                        type: 'session',
+                        payload: [{ id: res.data.id, name: res.data.name, friends: res.data.friends }],
+                      })
                       setSaveAlert(true)
                     } else {
                       setFalseAlert(true)

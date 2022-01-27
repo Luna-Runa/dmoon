@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const diarySchema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+      required: true,
+    },
+
     mood: {
       type: String,
       required: true,
@@ -21,6 +26,7 @@ const diarySchema = new mongoose.Schema(
 
     likes: {
       type: Number,
+      default: 0,
     },
   },
   { versionKey: false }

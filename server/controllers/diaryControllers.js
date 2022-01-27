@@ -7,7 +7,7 @@ export const diaryListController = (req, res) => {
     if (err) return res.status(500).send({ error: "database failure" });
 
     console.log(diaryListController);
-    res.send(diaries);
+    res.send(diaries.reverse());
   });
 };
 
@@ -64,4 +64,20 @@ export const diaryDeleteController = (req, res) => {
     console.log("삭제완료");
     res.status(200).send({ message: "성공했습니다." });
   });
+};
+
+export const diaryLikeController = (req, res) => {
+  Diary.updateOne(
+    { _id: req.body._id },
+    {
+      $inc: {
+        likes: 1,
+      },
+    },
+    (err) => {
+      if (err)
+        return res.status(400).send({ error: "database delete failure" });
+      console.log(diaryLikeController);
+    }
+  );
 };

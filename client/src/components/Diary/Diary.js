@@ -83,7 +83,7 @@ const Diary = () => {
               className="mb-3"
               onClick={async () => {
                 await axios
-                  .post('/diary/add', { mood, todoBool, todoText })
+                  .post('/diary/add', { id: user.id, mood, todoBool, todoText })
                   .then(setSaveAlert(true))
                   .catch(err => console.log(err))
               }}

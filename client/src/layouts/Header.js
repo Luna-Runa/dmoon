@@ -36,11 +36,11 @@ const Header = () => {
                   유저 검색
                 </Nav.Link>
               </Nav>
-              {/* {console.log(reducer)} */}
               {reducer.sessionReducer[0].id ? (
                 <Nav className="ms-auto">
                   <Navbar.Text className="me-3">
-                    {reducer.sessionReducer[0].name}(@{reducer.sessionReducer[0].id})
+                    <span style={{ color: 'black' }}>{reducer.sessionReducer[0].name} </span>
+                    (@{reducer.sessionReducer[0].id})
                   </Navbar.Text>
                   <Button className="me-auto" variant="primary" onClick={() => history.push('/info')}>
                     내 정보

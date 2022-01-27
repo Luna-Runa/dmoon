@@ -1,5 +1,6 @@
 import passport from "passport";
 import User from "../models/userModel.js";
+import Diary from "../models/diaryModel.js";
 import passportLocal from "passport-local";
 
 const LocalStrategy = passportLocal.Strategy;
@@ -33,7 +34,7 @@ export const userLogInController = (req, res) => {
 
     req.login(user, function (err) {
       if (err) return next(err);
-      return res.send({ id: user.id, name: user.name });
+      return res.send({ id: user.id, name: user.name, friends: user.friends });
     });
   })(req, res);
 };
@@ -148,6 +149,7 @@ export const userFriendsDeleteController = (req, res) => {
 };
 
 export const userFriendsListController = (req, res) => {
+  console.log(req.body.friends);
   User.find(
     { id: { $in: req.body.friends } },
     { _id: 0, id: 1, name: 1 },
@@ -155,6 +157,52 @@ export const userFriendsListController = (req, res) => {
       if (err)
         return res.status(400).send({ error: "database delete failure" });
       res.send(users);
+    }
+  );
+};
+
+export const userTimelineGetController = (req, res) => {
+  console.log(`req body friends ${req.body.friends}`);
+  User.find(
+    { id: { $in: req.body.friends } },
+    { _id: 0, id: 1, name: 1 },
+    (err, users) => {
+      if (err)
+        return res.status(400).send({ error: "database delete failure" });
+
+      console.log(users);
+      Diary.find({ id: { $in: req.body.friends } }, (err, diaries) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send({ error: "database failure" });
+        }
+
+        //diaries에서 풀어서 users의 id와 비교해서 name을 부여한 새로운 객체배열 반환
+        const timeline = diaries.map(function (data) {
+          let { _id, id, mood, todoBool, todoText, date, likes } = data;
+          const temp = new Object({
+            _id,
+            id,
+            name: "",
+            mood,
+            todoBool,
+            todoText,
+            date,
+            likes,
+          });
+
+          users.map(function (data2) {
+            if (data.id === data2.id) {
+              temp.name = data2.name;
+            }
+          });
+
+          return temp;
+        });
+
+        //시간정렬
+        res.send(timeline.reverse());
+      });
     }
   );
 };

@@ -11,7 +11,6 @@ const Friends = () => {
     await axios
       .post('/friends/list', { friends: reducer.sessionReducer[0].friends })
       .then(res => {
-        console.log(res)
         setFriends(res)
       })
       .catch(err => {

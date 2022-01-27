@@ -4,6 +4,7 @@ import {
   diaryAddController,
   diaryEditController,
   diaryDeleteController,
+  diaryLikeController,
 } from "../controllers/diaryControllers.js";
 import {
   userRegisterController,
@@ -14,6 +15,7 @@ import {
   userFriendsAddController,
   userFriendsDeleteController,
   userFriendsListController,
+  userTimelineGetController,
 } from "../controllers/userControllers.js";
 /* import path from "path"; */
 
@@ -40,6 +42,9 @@ reactRouter.put("/diary/edit/:id", diaryEditController);
 reactRouter.delete("/diary/delete", diaryDeleteController);
 
 reactRouter.post("/search", userSearchController);
+
+reactRouter.post("/timeline", userTimelineGetController);
+reactRouter.post("/like", diaryLikeController);
 
 /* reactRouter.get("*", (req, res) => {
   res.sendFile(index);

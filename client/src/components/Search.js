@@ -50,7 +50,6 @@ const Search = () => {
                     className="me-auto"
                     variant="primary"
                     onClick={async () => {
-                      console.log({ user: reducer.sessionReducer[0].id, friends: data.id })
                       await axios
                         .post('/friends/add', { user: reducer.sessionReducer[0].id, friends: data.id })
                         .then(res => {
