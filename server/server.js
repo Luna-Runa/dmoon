@@ -45,7 +45,12 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
 
 server.use(cors());
 //static 파일 보관을 위해 해당 폴더 사용 선언
-//server.use(express.static(path.join(__dirname, 'react-build')))
+server.use(express.static(path.join(__dirname, '../client/build')));
+
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+})
+
 server.use("/public", express.static("public"));
 
 server.use(methodOverride("_method"));
