@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    salt: {
+      type: String,
+      required: true,
+    },
+
     goal: {
       type: String,
       required: false,

@@ -11,6 +11,9 @@ const Home = () => {
   const [timeline, setTimeline] = useState([{}])
 
   const getFriends = () => {
+    if (reducer.sessionReducer[0].friends.length === 0 ){
+      return "타임라인이 비어있습니다. 친구를 추가했을 경우 친구의 일기가 나타납니다.";
+    }
     axios.post('/timeline', { friends: reducer.sessionReducer[0].friends }).then(({ data }) => setTimeline(data))
   }
 
@@ -25,6 +28,7 @@ const Home = () => {
         <div>로그인 해주세요</div>
       ) : (
         <>
+          {console.log(timeline)}
           {!timeline[0].id && getFriends()}
           {timeline[0].id &&
             timeline.map((data, i) => {
