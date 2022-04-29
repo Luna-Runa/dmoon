@@ -4,6 +4,7 @@ import express from "express";
 import path from "path";
 import userRouter from "./routes/userRouter.js";
 import diaryRouter from "./routes/diaryRouter.js";
+import authRouter from "./routes/authRouter.js";
 import cors from "cors";
 import passport from "passport";
 import passportLocal from "passport-local";
@@ -33,6 +34,7 @@ server.use(connectFlash());
 
 server.use(userRouter);
 server.use(diaryRouter);
+server.use(authRouter);
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
   if (err) return console.log("ERR", err);
