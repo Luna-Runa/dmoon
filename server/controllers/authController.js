@@ -19,6 +19,7 @@ export const authLogInController = (req, res) => {
 };
 
 export const authLogOutController = (req, res) => {
+  console.log(authLogOutController);
   // 세션 부수고 쿠키도 강제삭제
   req.session.destroy(() => {
     res.clearCookie("connect.sid");
@@ -70,14 +71,6 @@ passport.deserializeUser((id, done) => {
 });
 
 //////////////////////////암호화//////////////////////////
-const createSalt = () =>
-  new Promise((res, rej) => {
-    crypto.randomBytes(64, (err, buf) => {
-      if (err) rej(err);
-      res(buf.toString("base64"));
-    });
-  });
-
 const makePasswordHashed = (id, password) =>
   new Promise(async (res, rej) => {
     const salt = await User.findOne({ id })

@@ -1,5 +1,4 @@
 export const isLogIn = (req, res, next) => {
-  console.log("isLogIn " + req.user);
   console.log("isLogIn " + req.isAuthenticated());
   if (req.isAuthenticated()) {
     next();

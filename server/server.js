@@ -26,7 +26,6 @@ server.use(
     secret: "secretCode",
     resave: true,
     saveUninitialized: true,
-    cookie: { secure: true },
     maxAge: 1000 * 60 * 60,
   })
 );
