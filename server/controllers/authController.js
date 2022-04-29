@@ -1,5 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import crypto from "crypto";
+import User from "../models/userModel.js";
 
 //실행순서 : authenticate() -> LocalStrategy 생성자 -> serializeUser()
 export const authLogInController = (req, res) => {
@@ -32,7 +34,7 @@ passport.use(
       session: true,
     },
     async (inputId, inputPassword, done) => {
-      /* console.log(inputId, inputPassword); */
+      console.log(inputId, inputPassword);
       try {
         const user = await User.findOne({ id: inputId });
 
@@ -47,6 +49,7 @@ passport.use(
         }
       } catch (err) {
         done(null, false, { message: err });
+        console.log(err);
       }
     }
   )
@@ -72,15 +75,6 @@ const createSalt = () =>
     crypto.randomBytes(64, (err, buf) => {
       if (err) rej(err);
       res(buf.toString("base64"));
-    });
-  });
-
-const createHashedPassword = (password) =>
-  new Promise(async (res, rej) => {
-    const salt = await createSalt();
-    crypto.pbkdf2(password, salt, 9797, 64, "sha512", (err, key) => {
-      if (err) rej(err);
-      res({ hashedPassword: key.toString("base64"), salt });
     });
   });
 

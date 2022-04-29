@@ -27,6 +27,15 @@ export const userRegisterController = async (req, res) => {
   });
 };
 
+const createHashedPassword = (password) =>
+  new Promise(async (res, rej) => {
+    const salt = await createSalt();
+    crypto.pbkdf2(password, salt, 9797, 64, "sha512", (err, key) => {
+      if (err) rej(err);
+      res({ hashedPassword: key.toString("base64"), salt });
+    });
+  });
+
 // //////////////////////////암호화//////////////////////////
 // const createSalt = () =>
 //   new Promise((res, rej) => {

@@ -9,7 +9,7 @@ const Info = () => {
   const reducer = useSelector(state => state)
 
   useEffect(async () => {
-    const res = await axios.get('/info')
+    const res = await axios.get('/info', { withCredentials: true })
     if (res)
       dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name, friends: res.data.friends }] })
     return () => {
