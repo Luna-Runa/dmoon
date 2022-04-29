@@ -9,11 +9,9 @@ const Info = () => {
   const reducer = useSelector(state => state)
 
   useEffect(async () => {
-    await axios
-      .get('/info')
-      .then(res =>
-        dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name, friends: res.data.friends }] }),
-      )
+    const res = await axios.get('/info', { withCredentials: true })
+    if (res)
+      dispatch({ type: 'session', payload: [{ id: res.data.id, name: res.data.name, friends: res.data.friends }] })
     return () => {
       cleanup
     }
@@ -47,14 +45,8 @@ const Info = () => {
             <Button
               variant="danger"
               onClick={async () => {
-                await axios
-                  .get('/logout')
-                  .then(res => {
-                    if (res.data) {
-                      dispatch({ type: 'session', payload: [{ id: undefined, name: undefined }] })
-                    }
-                  })
-                  .catch(err => console.log(err))
+                const res = await axios.get('/logout')
+                if (res.data) dispatch({ type: 'session', payload: [{ id: undefined, name: undefined }] })
               }}
             >
               로그아웃
