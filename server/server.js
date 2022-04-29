@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import reactRouter from "./routes/reactRouter.js";
+import userRouter from "./routes/userRouter.js";
+import diaryRouter from "./routes/diaryRouter.js";
 import cors from "cors";
 import passport from "passport";
 import passportLocal from "passport-local";
@@ -30,7 +31,8 @@ server.use(passport.initialize());
 server.use(passport.session());
 server.use(connectFlash());
 
-server.use(reactRouter);
+server.use(userRouter);
+server.use(diaryRouter);
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err) => {
   if (err) return console.log("ERR", err);
