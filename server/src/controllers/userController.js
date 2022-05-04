@@ -3,8 +3,6 @@ import Diary from "../models/diaryModel.js";
 import passportLocal from "passport-local";
 import crypto from "crypto";
 
-const LocalStrategy = passportLocal.Strategy;
-
 export const userRegisterController = async (req, res) => {
   let { id, name, password, confirmPassword } = req.body;
 
