@@ -12,9 +12,9 @@ import expressSession from "express-session";
 
 dotenv.config();
 
-const __dirname = path.resolve();
-
 const server = express();
+
+const __dirname = path.resolve();
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
